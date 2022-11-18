@@ -2,142 +2,68 @@
 #include<string.h>
 #include<stdlib.h>
 
-// employee data structure
-typedef struct employee{
-    char name[50];      // name
-    float wage;         // hourly wage
-    int number;         // employee ID
-    int clockIn;        // clockin time
-    int clockOut;       // clockout time
-} employee;
+#include<stdio.h>
+#include<string.h>
+#include "hashmap.h"
 
-// initalizing global variables
-unsigned int max = 10;           // predetermined max number of employees
-employee *empArr;       // employee array
-unsigned int numEmp = 0;         // current employee ID number for new employees
-unsigned int currEmp = 0;        // current number of employees
-
-// name comparator
-int cmpName(const void *a, const void *b){
-    const employee *emp1 = (employee *) a;
-    const employee *emp2 = (employee *) b;
-    return strcmp(emp1->name, emp2->name);
-}
-
-// wage comparator
-int cmpWage(const void *a, const void *b){
-    const employee *emp1 = (employee *) a;
-    const employee *emp2 = (employee *) b;
-    return(emp1->wage - emp2->wage);
-}
-
-// id comparator
-int cmpID(const void *a, const void *b){
-    const employee *emp1 = (employee *) a;
-    const employee *emp2 = (employee *) b;
-    return(emp1->number - emp2->number);
-}
+unsigned int IDNUM = 1000;         // current employee ID number for new employees
 
 // adds employee to employee array
 void addEmployee(char name[], float wage){
-    employee emp;
-    strcpy(emp.name, name);
-    emp.wage = wage;
-    emp.number = numEmp;
+    employee *emp = malloc(sizeof(employee));
+    strcpy(emp->name, name);
+    emp->wage = wage;
+    emp->number = IDNUM;
+    emp->clockIn = 0;
+    emp->clockOut = 0;
     
-    if(currEmp == max - 1){
-        max = max*2;
-        empArr = realloc(empArr, max * sizeof(employee));
-    }
-    empArr[currEmp] = emp;
+    insert(emp);
 
-    numEmp++;
-    currEmp++;
+    IDNUM++;
 }
 
-// delets employee from employee array
-void deleteEmployee(unsigned int ID){
-    int index;
-    for(int i = 0; i < currEmp; i++){
-        if(empArr[i].number == ID){
-            index = i;
-        }
-    }
-
-    for(int i = index; i < currEmp; i++){
-        empArr[i] = empArr[i+1];
-    }
-
-    currEmp--;
-
-    if(currEmp <= max/2){
-        max = (0.75)*max;
-        empArr = realloc(empArr, max * sizeof(employee));
-    }
+// deletes employee from employee array
+void deleteEmployee(int ID){
+    removeEmp(ID);
 }
 
 // gets the wage for an employee
-float getWage(unsigned int ID){
-    float pay = 0;
-    for(int i = 0; i < currEmp; i++){
-        if(empArr[i].number == ID){
-            int time = empArr[i].clockOut - empArr[i].clockIn;
-            pay = empArr[i].wage * (float) time;
-            break;
-        }
-    }
-    return pay;
+float getWage(int ID){
+    
 }
 
 // updates clockin time for an employee
-void clockIn(unsigned int ID, int time){
-    int newTime;
-    for(int i = 0; i < currEmp; i++){
-        if(empArr[i].number = ID){
-            empArr[i].clockIn = newTime;
-            break;
-        }
-    }
+void clockIn(int ID, int time){
+    
 }
 
 // updates clockout time for an employee
-void clockOut(unsigned int ID, int time){
-    int newTime;
-    for(int i = 0; i < currEmp; i++){
-        if(empArr[i].number = ID){
-            empArr[i].clockOut = newTime;
-            break;
-        }
-    }
+void clockOut(int ID, int time){
+
 }
 
 // sorts employee array by name
 void sortByName(){
-    qsort(empArr, currEmp, sizeof(employee), cmpName);
-
+    sortName();
 }
 
 // sorts employee array by wage
 void sortByWage(){
-    qsort(empArr, currEmp, sizeof(employee), cmpWage);
+    sortWage();
 }
 
 // sorts employee array by ID
 void sortByID(){
-    qsort(empArr, currEmp, sizeof(employee), cmpID);
+    sortID();
 }
 
 // prints employee array
 void printEmployees(){
-    printf("___________________________________________________________________________________________________________________\n");
-    for(int i = 0; i < currEmp; i++){
-        printf("| Employee ID: %-5d | Employee Name: %-50s | Employee Wage: $%-7.2f|\n", empArr[i].number, empArr[i].name, empArr[i].wage);
-    }
-    printf("___________________________________________________________________________________________________________________\n");
+    printTable();
 }
 
 void main(){
-    empArr = calloc(max, sizeof(employee));
+    initTable();
 
     addEmployee("Jim Bob", 100);
     addEmployee("Kai Scarpato", 200);
@@ -151,25 +77,13 @@ void main(){
     addEmployee("Small Dog", 1000);
     addEmployee("Medium Dog", 1100);
 
-    sortByWage();
-
-    printEmployees();
-    
     sortByName();
 
-    printEmployees();
+    sortByWage();
+
+    deleteEmployee(1009);
 
     sortByID();
 
-    printEmployees();
-
-    deleteEmployee(10);
-
-    deleteEmployee(2);
-
-    addEmployee("Bob Jim", 1200);
-
-    printEmployees();
-
-    free(empArr);
+    freeMem();
 }
