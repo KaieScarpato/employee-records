@@ -1,0 +1,11 @@
+Dog Dog|15|9:00 AM|5:00 PM|
+Very Large Dog|15|9:00 AM|5:00 PM|
+Very Small Dog|16|9:00 AM|5:00 PM|
+Not Too Big Dog|15|9:00 AM|5:00 PM|
+Dog|18|9:00 AM |5:00 PM|
+Smallest Dog|14|9:00 AM|5:00 PM| 
+Largest Dog|17|9:00 AM|5:00 PM|
+Sorta Medium Sized Dog|15|4:30 PM|8:00 PM|
+Big Dog|18|12:30 PM|8:00 PM|
+Small Dog|14|12:30 PM|8:00 PM|
+Medium Dog|14|4:30 PM|8:00 PM|
