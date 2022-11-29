@@ -1,11 +1,11 @@
 #include<stdlib.h>
 
 typedef struct employee{
-    char name[50];      // name
+    char name[25];      // name
     float wage;         // hourly wage
     int number;         // employee ID
-    int clockIn;        // clockin time
-    int clockOut;       // clockout time
+    char clockIn[9];        // clockin time
+    char clockOut[9];       // clockout time
 } employee;
 
 unsigned int size = 100;   // size of hashmap
@@ -43,11 +43,11 @@ void initTable(){
 
 // print the employees
 void printArr(employee arr[]){
-    printf("___________________________________________________________________________________________________________________\n");
+    printf("___________________________________________________________________________________________________________________________________\n");
     for(int i = 0; i < curr; i++){
-        printf("| Employee ID: %-4d | Employee Name: %-50s | Employee Wage: $%-7.2f|\n", arr[i].number, arr[i].name, arr[i].wage);
+        printf("| Employee ID: %-4d | Employee Name: %-22s | Employee Wage: $%-7.2f | Clock In: %-9s | Clock Out: %-9s|\n", arr[i].number, arr[i].name, arr[i].wage, arr[i].clockIn, arr[i].clockOut);
     }
-    printf("___________________________________________________________________________________________________________________\n");
+    printf("___________________________________________________________________________________________________________________________________\n");
 
 }
 
@@ -117,12 +117,46 @@ int removeEmp(int ID){
     if(ID < 1000) return 1;
     if(ind(ID) == -1) return 1;
     int index = ind(ID);
-
+    free(table[index]);
     table[index] = NULL; 
     
     curr--;
     return 0;
 }   
+
+// sets clockin time for an employee
+void setClockIn(int ID, char time[]){
+    int index = ind(ID);
+    strcpy(table[index]->clockIn, time);
+}
+
+// sets clockout time for an employee
+void setClockOut(int ID, char time[]){
+    int index = ind(ID);
+    strcpy(table[index]->clockOut, time);
+}
+
+// returns time as float equivalent
+float timeToFloat(char time[]){
+    float hour = atof(strtok(time, ":"));
+    float minute = atof(strtok(NULL, " "));
+    char *check = strtok(NULL, "M");
+
+    if(strcmp(check, "P") == 0){
+        hour += 12;
+    }
+
+    return (hour + (minute/60));
+}
+
+// returns pay for employee
+float pay(int ID){
+    int index = ind(ID);
+    float inTime = timeToFloat(table[index]->clockIn);
+    float outTime = timeToFloat(table[index]->clockOut);
+    return(table[index]->wage*(outTime-inTime));
+}
+
 
 // sorts employees by name
 void sortName(){
