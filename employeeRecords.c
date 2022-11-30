@@ -48,21 +48,21 @@ void getTime(char* tme){
         iHour = tm.tm_hour % 12;
         iMinute = tm.tm_min;   
     }
-    char hour[3];
-    char minute[3];
-    itoa(iHour, hour, 10);
-    itoa(iMinute, minute, 10);
-    strcat(tme, hour);
-    strcat(tme, ":");
     if(tm.tm_min < 10){
-        strcat(tme, "0");
-    }
-    strcat(tme, minute);
-    if(tm.tm_hour < 12 || tm.tm_hour == 24){
-        strcat(tme, " AM");
+        if(tm.tm_hour < 12 || tm.tm_hour == 24){
+            sprintf(tme, "%d:0%d AM", iHour, iMinute);
+        }
+        else{
+            sprintf(tme, "%d:0%d PM", iHour, iMinute);
+        }
     }
     else{
-        strcat(tme," PM");
+        if(tm.tm_hour < 12 || tm.tm_hour == 24){
+            sprintf(tme, "%d:%d AM", iHour, iMinute);
+        }
+        else{
+            sprintf(tme, "%d:%d PM", iHour, iMinute);
+        }
     }
 }
 
