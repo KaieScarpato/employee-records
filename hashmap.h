@@ -189,15 +189,23 @@ int removeEmp(int ID){
 }   
 
 // sets clockin time for an employee
-void setClockIn(int ID, char time[]){
+int setClockIn(int ID, char time[]){
+    if(ID < 1000) return 1;
+    if(ind(ID) == -1) return 1;
+
     int index = ind(ID);
     strcpy(table[index]->clockIn, time);
+    return 0;
 }
 
 // sets clockout time for an employee
-void setClockOut(int ID, char time[]){
+int setClockOut(int ID, char time[]){
+    if(ID < 1000) return 1;
+    if(ind(ID) == -1) return 1;
+
     int index = ind(ID);
     strcpy(table[index]->clockOut, time);
+    return 0;
 }
 
 // returns time as float equivalent
