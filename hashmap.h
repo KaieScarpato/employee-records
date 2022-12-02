@@ -8,10 +8,10 @@ typedef struct employee{
     char clockOut[9];       // clockout time
 } employee;
 
-unsigned int size = 100;   // size of hashmap
+unsigned int size = 5;   // size of hashmap
 unsigned int curr = 0;     // current number of employees
 
-employee *table[100];      // array used as hashmap data structure
+employee *table[5];      // array used as hashmap data structure
 
 // name comparator
 int cmpName(const void *a, const void *b){
@@ -96,7 +96,35 @@ unsigned int ind(int ID){
 // inserts employee into hashmap
 int insert(employee *emp){
     if(emp == NULL) return 1;
-    curr++;
+    
+
+    if(curr == size){
+        employee *temp[curr];
+
+        for (int i = 0; i < size; i++){
+            temp[i] = table[i];
+        }
+
+        size = size * 2;
+        employee *newTable[size];
+
+        for(int i = 0; i < size; i++){
+            newTable[i] = NULL;
+        }
+
+        for(int i = 0; i < curr; i++){
+            int index = hash(temp[i]->number);
+            if(newTable[index] != NULL){
+                while(newTable[index] != NULL){
+                    index++;
+                    index %= size;
+                }
+            }
+            newTable[index] = temp[i];
+        }
+
+        memcpy(table, newTable, sizeof(newTable));
+    }
     
     int index = hash(emp->number);
     
@@ -109,6 +137,8 @@ int insert(employee *emp){
     
     table[index] = emp;
 
+    curr++;
+
     return 0;
 }
 
@@ -116,11 +146,45 @@ int insert(employee *emp){
 int removeEmp(int ID){
     if(ID < 1000) return 1;
     if(ind(ID) == -1) return 1;
-    int index = ind(ID);
-    free(table[index]);
-    table[index] = NULL; 
     
     curr--;
+
+    int index = ind(ID);
+    free(table[index]);
+    table[index] = NULL;
+
+    if(curr <= 0.5*size){ 
+        employee *temp[curr];
+        
+        int j = 0;
+        for (int i = 0; i < size; i++){
+            if(table[i] != NULL){
+                temp[j] = table[i];
+                j++;
+            }
+        }
+        
+        size = size * 0.75;
+        employee *newTable[size];
+        
+        for(int i = 0; i < size; i++){
+            newTable[i] = NULL;
+        }
+        
+        for(int i = 0; i < curr; i++){
+            int index = hash(temp[i]->number);
+            if(newTable[index] != NULL){
+                while(newTable[index] != NULL){
+                    index++;
+                    index %= size;
+                }
+            }
+            newTable[index] = temp[i];
+        }
+
+        memcpy(table, newTable, sizeof(newTable));
+    } 
+    
     return 0;
 }   
 
