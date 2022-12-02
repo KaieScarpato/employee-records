@@ -76,7 +76,7 @@ unsigned int hash(int ID){
 }
 
 // finds index of a given employee, returns -1 if the employee is not in the hashmap
-unsigned int ind(int ID){
+int ind(int ID){
     unsigned int hashVal = hash(ID);
     if (ID == table[hashVal]->number){
         return hashVal;
