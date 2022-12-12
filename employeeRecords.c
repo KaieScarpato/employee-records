@@ -168,7 +168,7 @@ void main(){
         scanf("%2s", &input);
         fflush(stdin);
         if(strcmp(input, "ES") == 0){
-            printf("_______________________________________________________________________________________________________________________________________\n");
+            printf("______________________________________________________________________________________________________________________________________\n");
             printf("Ending system, Goodbye!");
             Sleep(1000);
             break;
@@ -197,7 +197,7 @@ void main(){
                 fflush(stdin);
             
                 int check = 0;            
-                for(int i = 0; i < 4; i++){
+                for(int i = 0; i < 3; i++){
                     if(swage[i] == '\0'){
                         break;
                     }
@@ -233,11 +233,32 @@ void main(){
         }   
         if(strcmp(input, "DE") == 0){
             int ID;
-            
+            char sID[5];
             printf("______________________________________________________________________________________________________________________________________\n");
-            printf("Enter the employee ID: ");
-            scanf("%d", &ID);
-            fflush(stdin);
+            while(1){
+                printf("Enter the ID: ");
+                scanf("%4s", sID);
+                fflush(stdin);
+                
+                int check = 0;            
+                for(int i = 0; i < 4; i++){
+                    if(sID[i] == '\0'){
+                        break;
+                    }
+                    if(isdigit(sID[i]) == 0){
+                        check = 1;
+                    }
+                }
+                if(check == 1){
+                    printf("Incorrect ID entered\n");
+                    continue;
+                }
+                else{
+                    ID = atoi(sID);
+                    break;
+                }
+            }
+            
             int check = deleteEmployee(ID);
             
             printf("______________________________________________________________________________________________________________________________________\n");
@@ -256,11 +277,32 @@ void main(){
         }
         if(strcmp(input, "GW") == 0){
             int ID;
+            char sID[5];
             
             printf("______________________________________________________________________________________________________________________________________\n");   
-            printf("Enter the employee ID: ");
-            fflush(stdin);
-            scanf("%d", &ID);
+            while(1){
+                printf("Enter the ID: ");
+                scanf("%4s", sID);
+                fflush(stdin);
+                
+                int check = 0;            
+                for(int i = 0; i < 4; i++){
+                    if(sID[i] == '\0'){
+                        break;
+                    }
+                    if(isdigit(sID[i]) == 0){
+                        check = 1;
+                    }
+                }
+                if(check == 1){
+                    printf("Incorrect ID entered\n");
+                    continue;
+                }
+                else{
+                    ID = atoi(sID);
+                    break;
+                }
+            }
             
             float check = getWage(ID);
             if(check == -1.0){
@@ -293,11 +335,32 @@ void main(){
         }
         if(strcmp(input, "CI") == 0){
             int ID;
-            
+            char sID[5];
+        
             printf("______________________________________________________________________________________________________________________________________\n");                
-            printf("Enter the employee ID: ");
-            scanf("%d", &ID);
-            fflush(stdin);
+            while(1){
+                printf("Enter the ID: ");
+                scanf("%4s", sID);
+                fflush(stdin);
+                
+                int check = 0;            
+                for(int i = 0; i < 4; i++){
+                    if(sID[i] == '\0'){
+                        break;
+                    }
+                    if(isdigit(sID[i]) == 0){
+                        check = 1;
+                    }
+                }
+                if(check == 1){
+                    printf("Incorrect ID entered\n");
+                    continue;
+                }
+                else{
+                    ID = atoi(sID);
+                    break;
+                }
+            }
             
             int check = clockIn(ID);
             
@@ -317,12 +380,32 @@ void main(){
         }
         if(strcmp(input, "CO") == 0){
             int ID;
+            char sID[5];
             
             printf("______________________________________________________________________________________________________________________________________\n");    
-            printf("Enter the employee ID: ");
-            scanf("%d", &ID);
-            fflush(stdin);
-            
+            while(1){
+                printf("Enter the ID: ");
+                scanf("%4s", sID);
+                fflush(stdin);
+                
+                int check = 0;            
+                for(int i = 0; i < 4; i++){
+                    if(sID[i] == '\0'){
+                        break;
+                    }
+                    if(isdigit(sID[i]) == 0){
+                        check = 1;
+                    }
+                }
+                if(check == 1){
+                    printf("Incorrect ID entered\n");
+                    continue;
+                }
+                else{
+                    ID = atoi(sID);
+                    break;
+                }
+            }
             int check = clockOut(ID);
             
             printf("______________________________________________________________________________________________________________________________________\n");        
