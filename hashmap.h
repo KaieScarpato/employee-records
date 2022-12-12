@@ -40,6 +40,9 @@ int cmpID(const void *a, const void *b){
 
 // returns time as float equivalent, used for employee pay
 float timeToFloat(char time[]){
+    if(strcmp(time, "0") == 0){
+        return 0;
+    }
     float hour = atof(strtok(time, ":"));           // gets hour as float equivalent
     float minute = atof(strtok(NULL, " "));         // gets minutes as float equivalent
     char *check = strtok(NULL, "M");                // either A or P
